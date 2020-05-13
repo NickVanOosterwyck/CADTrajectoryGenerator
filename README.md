@@ -1,5 +1,5 @@
-# TrajectoryOptimisation
-Repository of my ongoing PhD "Development of an a priori and online trajectory optimisation for repetitive movements." at the Univeristy of Antwerp. Research funded by a PhD grant of the Research Foundation Flanders (FWO) [1S88120N].
+# CADTrajectory Generator
+Matlab tool to create trajectory motion drivers for CAD packages (i.e. Siemens NX). Supports parametrised trajectories for optimisation purposes as well.
 
-Contact details and publications: https://www.uantwerpen.be/en/staff/nick-vanoosterwyck/
+Contact details : https://www.uantwerpen.be/en/staff/nick-vanoosterwyck/
 
