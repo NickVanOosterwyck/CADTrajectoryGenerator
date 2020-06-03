@@ -3,38 +3,33 @@ classdef CADTrajectory < handle
     %   Detailed explanation goes here
     
     properties
-        sTrajType % Trajectory type
+        
+        
     end
     
     properties (SetAccess = protected)
-        problem % a problem struct that contains the input settings
-        nPieces % number of time intervals
+        sTrajType % Trajectory type
         DOF % degrees of freedom
         trapRatio % ratio t_acc/t_tot (trap)
+        nPieces % number of time intervals
+        
     end
-   
+    
     
     methods
         function obj = CADTrajectory(problem)
-            %CADTRAJECTORY Construct an instance of this class and check
-            %input.
+            %CADTRAJECTORY Construct an instance of this class and checks
+            %the problem input.
             %   Detailed explanation goes here
-            obj.problem = validateProblem(problem);
-        end
-    end
-    
-    methods(Access = private)
-        function updatePieces(obj)
-            switch obj.sTrajType
-                case {'poly5','poly','cheb','cheb2','custom'}
-                    obj.nPieces = 1;
-                case {'trap'}
-                    obj.nPieces = 3;
-                case {'spline'}
-                    obj.nPieces = obj.DOF + 3;
-            end
             
+            CADTrajectory.parseProblem(problem);
         end
     end
+    methods (Access = private)
+        [] = parseProblem(obj,prob)
+    end
+
+
+
 end
 

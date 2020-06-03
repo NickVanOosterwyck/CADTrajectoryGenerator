@@ -26,7 +26,6 @@ validatestring(problem.sTrajType,validTrajTypes)
 
 % check optional fields and assign default values if empty
 if ~isfield(problem.traj, 'DOF'), problem.DOF = 0; end
-if ~isfield(problem.traj, 'nInt'), problem.traj.nInt = 1; end
 if ~isfield(problem.traj, 'trapRatio'), problem.trapRatio = 1/3; end
 if ~isfield(problem.traj, 'trajFun'), problem.trajFun = []; end
 if ~isfield(problem.traj, 'timeA'), problem.timeA = sym('timeA'); end
