@@ -49,13 +49,15 @@ switch sTrajType
         symVar = [p0i symVar];
         % create position function
         pol=t.^(0:3).';
-        q=symVar*pol;    
+        q=symVar*pol;  
+        qd1=diff(q);
+        qd2=diff(qd1);
     case 'trap'
         symVar = [];
         % create velocity function
         dt = timeB-timeA;
         qd1_max = (posB-posA)/((trapRatio*dt)+(dt-2*trapRatio*dt));
-        qd1 = sym.empty(3,1);
+        qd1 = sym.empty(3,0);
         qd1(1,:) = qd1_max/(trapRatio*dt)*(t-timeA);
         qd1(2,:) = qd1_max;
         qd1(3,:) = -qd1_max/(trapRatio*dt)*(t-timeB);
@@ -64,22 +66,22 @@ switch sTrajType
         % solve system
         syms C1 C2 C3
         q = int(qd1,t);
-        eq = sym.empty(3,1);
+        eq = sym.empty(3,0);
         eq(1) = subs(q(1),t,timeA)+C1 == posA;
         eq(2) = subs(q(2),t,dt/2+timeA)+C2 == ...
             abs(posB-posA)/2+min(posB,posA);
         eq(3) = subs(q(3),t,timeB)+C3 == posB;
         sol = solve(eq,[C1 C2 C3]);
-        q = sym.empty(3,1);
+        q = sym.empty(3,0);
         q(1,:) = q(1)+sol.C1;
         q(2,:) = q(2)+sol.C2;
         q(3,:) = q(3)+sol.C3;
         
     case 'custom'
-       q=subs(trajFun,symvar(trajFun),t);
-       qd1=diff(q);
-       qd2=diff(q1);
-       
+        q=subs(trajFun,symvar(trajFun),t);
+        qd1=diff(q);
+        qd2=diff(qd1);
+        
 end
 
 %% define breakpoints

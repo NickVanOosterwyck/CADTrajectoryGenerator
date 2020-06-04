@@ -60,7 +60,7 @@ inputC.timeA = input.timeA;
 
 %%% timeB
 % check input and assign default if empty
-if ~isfield(input,'timeB'), input.timeA = sym('tB'); end
+if ~isfield(input,'timeB'), input.timeB = sym('tB'); end
 % extra checks
 if isnumeric(input.timeA) && isnumeric(input.timeB)
     if input.timeB < input.timeA
@@ -73,13 +73,13 @@ inputC.timeB = input.timeB;
 
 %%% posA
 % check input and assign default if empty
-if ~isfield(input,'posA'), input.timeA = sym('pA'); end
+if ~isfield(input,'posA'), input.posA = sym('pA'); end
 % assign to property
 inputC.posA = input.posA; 
 
 %%% posB
 % check input and assign default if empty
-if ~isfield(input,'posB'), input.timeA = sym('pB'); end
+if ~isfield(input,'posB'), input.posB = sym('pB'); end
 % assign to property
 inputC.posB = input.posB;
 
