@@ -1,19 +1,18 @@
-function [traj] = createTrajectory(problem)
+function [traj] = createTrajectory(obj)
 %
-%DEFINETRAJECTORY Create a paramterised symbolic trajectory definition 
-%based on the problem input.
+%DEFINETRAJECTORY Creates a paramterised symbolic trajectory definition.
 %   Detailed explanation goes here
 
-%% read problem
-sTrajType = problem.traj.sTrajType; % trajectory type
-DOF = problem.traj.DOF; % degree of freedom
-nPieces = problem.nInt; % #intervals
-trapRatio = problem.trapRatio; % ratio t_acc/t_tot (trap)
-trajFun = problem.trajFun; % custom symbolic trajectory function
-timeA = problem.timeA; % start time
-timeB = problem.timeB; % end time
-posA = problem.posA; % start position
-posB = problem.posB; % end position
+%% read required properties
+sTrajType = obj.input.sTrajType; % trajectory type
+timeA = obj.input.timeA; % start time
+timeB = obj.input.timeB; % end time
+posA = obj.input.posA; % start position
+posB = obj.input.posB; % end position
+DOF = obj.input.DOF; % degree of freedom
+nPieces = obj.input.nPieces; % #intervals
+trapRatio = obj.input.trapRatio; % ratio t_acc/t_tot (trap)
+trajFun = obj.input.trajFun; % custom symbolic trajectory function
 
 %% define position function
 syms t % time variable
@@ -112,7 +111,7 @@ end
 % start and end constraint equations
 switch sTrajType
     case {'poly','poly5','cheb','cheb2','spline'}
-        constrEq_bnd = sym.empty(6,1);
+        constrEq_bnd = sym.empty(6,0);
         constrEq_bnd(1,1) = subs(q(1),t,timeA)==posA;
         constrEq_bnd(2,1) = subs(qd1(1),t,timeA)==0;
         constrEq_bnd(3,1) = subs(qd2(1),t,timeA)==0;
@@ -173,8 +172,8 @@ switch sTrajType
         qd1 = subs(qd1,constrVar,constrVar_sol);
         qd2 = subs(qd2,constrVar,constrVar_sol);
     otherwise
-        constrVar_sol =[];
-        tsol = [];
+%         constrVar_sol =[];
+%         tsol = [];
 end
 
 % write output
@@ -184,11 +183,13 @@ traj.qd2=qd2;
 traj.breaks=breaks;
 traj.designVar=designVar;
 
-traj.var.symVar=symVar;
-traj.var.constrVar=constrVar;
-traj.var.constrVar_sol=constrVar_sol;
-traj.var.constrEq=constrEq;
+% traj.var.symVar=symVar;
+% traj.var.constrVar=constrVar;
+% traj.var.constrVar_sol=constrVar_sol;
+% traj.var.constrEq=constrEq;
+% 
+% traj.tsol=tsol;
 
-traj.tsol=tsol;
+obj.traj = traj;
 end
 

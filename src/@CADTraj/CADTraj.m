@@ -1,4 +1,4 @@
-classdef CADTrajectory < handle
+classdef CADTraj < handle
     %CADTRAJECTORY Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -8,25 +8,22 @@ classdef CADTrajectory < handle
     end
     
     properties (SetAccess = protected)
-        sTrajType % Trajectory type
-        DOF % degrees of freedom
-        trapRatio % ratio t_acc/t_tot (trap)
-        nPieces % number of time intervals
-        
+        input
+        traj
     end
     
     
     methods
-        function obj = CADTrajectory(problem)
+        function obj = CADTraj(input)
             %CADTRAJECTORY Construct an instance of this class and checks
-            %the problem input.
+            %the input struct.
             %   Detailed explanation goes here
             
-            CADTrajectory.parseProblem(problem);
+           obj.parseInput(input);
         end
     end
     methods (Access = private)
-        [] = parseProblem(obj,prob)
+        [inputC] = parseInput(obj, input);
     end
 
 
