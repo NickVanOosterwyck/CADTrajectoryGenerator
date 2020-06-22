@@ -10,6 +10,7 @@ classdef CADTraj < handle
     properties (SetAccess = protected)
         input
         traj
+        print
     end
     
     
@@ -19,9 +20,11 @@ classdef CADTraj < handle
             %the input struct.
             %   Detailed explanation goes here
             
-           obj.parseInput(input);
+            obj.parseInput(input);
         end
+        [print] = printTrajectory(obj);
     end
+    
     methods (Access = private)
         [inputC] = parseInput(obj, input);
     end

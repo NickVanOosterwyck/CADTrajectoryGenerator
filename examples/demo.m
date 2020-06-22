@@ -27,8 +27,20 @@ clear problem
 problem.sTrajType = 'spline';
 problem.DOF = 2;
 
-spline = CADTraj(problem);
-spline.createTrajectory();
-disp(spline.traj.q)
+spline2 = CADTraj(problem);
+spline2.createTrajectory();
+disp(spline2.traj.q)
 
-%CADTraj.printTrajectory();
+% example spline2
+clear problem
+problem.sTrajType = 'custom';
+syms a b t
+problem.trajFun = [a*t^2 + b*t; t];
+problem.trajFunBreaks = [0 1 2];
+problem.designVars = [a b];
+
+custom = CADTraj(problem);
+custom.createTrajectory();
+disp(custom.traj.q)
+
+custom.printTrajectory();

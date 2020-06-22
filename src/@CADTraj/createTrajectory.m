@@ -13,6 +13,8 @@ DOF = obj.input.DOF; % degree of freedom
 nPieces = obj.input.nPieces; % #intervals
 trapRatio = obj.input.trapRatio; % ratio t_acc/t_tot (trap)
 trajFun = obj.input.trajFun; % custom symbolic trajectory function
+trajFunBreaks = obj.input.trajFunBreaks;
+designVars = obj.input.designVars;
 
 %% define position function
 syms t % time variable
@@ -78,7 +80,7 @@ switch sTrajType
         q(3,:) = q(3)+sol.C3;
         
     case 'custom'
-        q=subs(trajFun,symvar(trajFun),t);
+        q=trajFun;
         qd1=diff(q);
         qd2=diff(qd1);
         
@@ -91,8 +93,10 @@ switch sTrajType
             timeB-trapRatio*dt,timeB];
     case 'spline'
         breaks = linspace(timeA,timeB,nPieces+1);
+    case 'custom'
+        breaks = trajFunBreaks;
     otherwise
-        breaks=[timeA,timeB];
+        breaks = [timeA,timeB];
 end
 
 %% define constrained and design variables
@@ -104,6 +108,9 @@ switch sTrajType
         constrVar=symVar(1:end).';
         designVar=sym('q', [1 nPieces]);
         designVar=designVar(2:nPieces-2).';
+    case 'custom'
+        constrVar = [];
+        designVar = designVars;
     otherwise
         constrVar =[];
         designVar =[];

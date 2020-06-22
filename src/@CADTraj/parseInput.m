@@ -54,13 +54,21 @@ inputC.sTrajType = input.sTrajType;
 
 %%% timeA
 % check input and assign default if empty
-if ~isfield(input,'timeA'), input.timeA = sym('tA'); end
+if ~isfield(input,'timeA')
+    input.timeA = sym('tA');
+elseif ~isa(input.timeA,'sym') && ~isnumeric(input.timeA)
+    error('Field ''timeA'' must be numeric or symbolic')
+end
 % assign to property
 inputC.timeA = input.timeA; 
 
 %%% timeB
 % check input and assign default if empty
-if ~isfield(input,'timeB'), input.timeB = sym('tB'); end
+if ~isfield(input,'timeB')
+    input.timeB = sym('tB');
+elseif ~isa(input.timeB,'sym') && ~isnumeric(input.timeB)
+    error('Field ''timeB'' must be numeric or symbolic')
+end
 % extra checks
 if isnumeric(input.timeA) && isnumeric(input.timeB)
     if input.timeB < input.timeA
@@ -73,21 +81,32 @@ inputC.timeB = input.timeB;
 
 %%% posA
 % check input and assign default if empty
-if ~isfield(input,'posA'), input.posA = sym('pA'); end
+if ~isfield(input,'posA')
+    input.posA = sym('pA');
+elseif ~isa(input.posA,'sym') && ~isnumeric(input.posA)
+    error('Field ''posA'' must be numeric or symbolic')
+end
 % assign to property
 inputC.posA = input.posA; 
 
 %%% posB
 % check input and assign default if empty
-if ~isfield(input,'posB'), input.posB = sym('pB'); end
+if ~isfield(input,'posB')
+    input.posB = sym('pB');
+elseif ~isa(input.posB,'sym') && ~isnumeric(input.posB)
+    error('Field ''posB'' must be numeric or symbolic')
+end
 % assign to property
 inputC.posB = input.posB;
 
 %%% DOF
 % check input and assign default if empty
-if ~isfield(input,'DOF'), input.DOF = 0; end
-mustBeNonnegative(input.DOF);
-mustBeInteger(input.DOF)
+if ~isfield(input,'DOF')
+    input.DOF = 0;
+else
+    mustBeNonnegative(input.DOF);
+    mustBeInteger(input.DOF)
+end
 % extra checks
 switch inputC.sTrajType
     case {'trap','poly5'}
@@ -100,28 +119,36 @@ switch inputC.sTrajType
             warning('The selected trajectory is not optimisable.')
         end
 end
-inputC.DOF = input.DOF; % assign to property
+% assign to property
+inputC.DOF = input.DOF; 
 
 %%% trapRatio
 % check input and assign default if empty
-if ~isfield(input,'trapRatio'), input.trapRatio = []; end
-mustBeNonnegative(input.trapRatio);
-mustBeLessThanOrEqual(input.trapRatio,0.5)
-% extra checks
-switch inputC.sTrajType
-    case {'poly5','poly','cheb','cheb2','spline','custom'}
-        if ~isempty(input.trapRatio)
-        error(['The selected trajectory type ''%s'' does not allow a',...
-            'field ''trapRatio.'''],input.sTrajType)
-        end
+if ~isfield(input,'trapRatio')
+    input.trapRatio = [];
+else
+    mustBeNonnegative(input.trapRatio);
+    mustBeLessThanOrEqual(input.trapRatio,0.5)
+    % extra checks
+    switch inputC.sTrajType
+        case {'poly5','poly','cheb','cheb2','spline','custom'}
+            if ~isempty(input.trapRatio)
+                error(['The selected trajectory type ''%s'' does not allow a',...
+                    'field ''trapRatio.'''],input.sTrajType)
+            end
+    end
 end
-inputC.trapRatio = input.trapRatio; % assign to property
+% assign to property
+inputC.trapRatio = input.trapRatio;
 
 %%% trajFun
 % check input and assign default if empty
-if ~isfield(input,'trajFun'), input.trajFun = []; end
-if ~isempty(input.trajFun) && ~isa(input.trajFun,'sym')
-    error('Value must be symbolic')
+if ~isfield(input,'trajFun')
+    input.trajFun = [];
+else
+    if ~isempty(input.trajFun) && ~isa(input.trajFun,'sym')
+        error('Value must be symbolic')
+    end
 end
 % extra checks
 switch inputC.sTrajType
@@ -131,7 +158,56 @@ switch inputC.sTrajType
             'field ''trajFun.'''],input.sTrajType)
         end
 end
-inputC.trajFun = input.trajFun; % assign to property
+% assign to property
+inputC.trajFun = input.trajFun;
+
+%%% trajFunBreaks
+% check input and assign default if empty
+if ~isfield(input,'trajFunBreaks'), input.trajFunBreaks = []; end
+if ~isa(input.trajFunBreaks,'sym') && ~isnumeric(input.trajFunBreaks)
+    error('Field ''trajFunBreaks'' must be numeric or symbolic')
+end
+% extra checks
+switch inputC.sTrajType
+    case {'poly5','trap','poly','cheb','cheb2','spline'}
+        if ~isempty(input.trajFunBreaks)
+        error(['The selected trajectory type ''%s'' does not allow a',...
+            'field ''trajFunBreaks'''],input.sTrajType)
+        end
+end
+% assign to property
+inputC.trajFunBreaks = input.trajFunBreaks;
+
+%%% designVars
+% check input and assign default if empty
+if ~isfield(input,'designVars')
+    input.designVars = [];
+else
+    if ~isa(input.designVars,'sym')
+        error('Field ''designVars'' must be symbolic')
+    end
+end
+% extra checks
+switch inputC.sTrajType
+    case {'poly5','trap','poly','cheb','cheb2','spline'}
+        if ~isempty(input.designVars)
+        error(['The selected trajectory type ''%s'' does not allow a',...
+            'field ''designVars'''],input.sTrajType)
+        end
+end
+% assign to property
+inputC.designVars = input.designVars;
+
+%%% digits
+% check input and assign default if empty
+if ~isfield(input,'digits')
+    input.digits = [];
+else
+    mustBeInteger(input.digits);
+    mustBeGreaterThanOrEqual(input.digits,2);
+end
+% assign to property
+inputC.digits = input.digits; 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % assign dependent properties
@@ -139,12 +215,14 @@ inputC.trajFun = input.trajFun; % assign to property
 
 %%% nPieces
 switch inputC.sTrajType
-    case {'poly5','poly','cheb','cheb2','custom'}
+    case {'poly5','poly','cheb','cheb2'}
         inputC.nPieces = 1;
     case {'trap'}
         inputC.nPieces = 3;
     case {'spline'}
         inputC.nPieces = inputC.DOF + 3;
+    case {'custom'}
+        inputC.nPieces = size(inputC.trajFun,1);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
