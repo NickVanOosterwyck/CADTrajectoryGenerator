@@ -37,7 +37,6 @@ problem.sTrajType = 'custom';
 syms a b t
 problem.trajFun = [a*t^2 + b*t; t];
 problem.trajFunBreaks = [0 1 2];
-problem.designVars = [a b];
 
 custom = CADTraj(problem);
 custom.createTrajectory();

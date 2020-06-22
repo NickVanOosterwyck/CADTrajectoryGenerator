@@ -55,7 +55,7 @@ end
 sBreaks = string.empty(0,nPieces+1);
 for i=1:nPieces+1
     if isa(breaks(i),'sym')
-        sBreaks(i) = char(breaks(i));
+        sBreaks(i) = char(vpa(breaks(i),digits));
     else
         sBreaks(i) = num2str(breaks(i));
     end
@@ -64,9 +64,9 @@ end
 if nPieces == 1
     fprintf(fileID,'%s\n',q);
 else
-    fprintf(fileID,'(STEP(time,%s,1,%s,0)*(%s))+',sBreaks(2),sBreaks(2),q(1));
+    fprintf(fileID,'(STEP(time,%s,1,%s,0)*(%s))+',sBreaks(2),sBreaks(2),char(vpa(q(1),digits)));
     for i=2:nPieces
-        fprintf(fileID,'((STEP(time,%s,0,%s,1)-STEP(time,%s,0,%s,1))*(%s))+',sBreaks(i),sBreaks(i),sBreaks(i+1),sBreaks(i+1),q(i));
+        fprintf(fileID,'((STEP(time,%s,0,%s,1)-STEP(time,%s,0,%s,1))*(%s))+',sBreaks(i),sBreaks(i),sBreaks(i+1),sBreaks(i+1),char(vpa(q(i),digits)));
     end
     fprintf(fileID,'%s\r\n','0'); % add zero to last summation
 end
