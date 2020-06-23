@@ -1,5 +1,5 @@
 function [inputC] = parseInput(obj, input)
-%PARSEPROBLEM runs through the problem struct and parses the input. The
+%PARSEPROBLEM runs through the input struct and parses the input. The
 %validated inputs are set to the class properties. If a mandatory field is 
 %missing or not valid, then it throws an error.
 %
@@ -46,14 +46,14 @@ function [inputC] = parseInput(obj, input)
 % sTrajType
 % check input
 if ~isfield(input, 'sTrajType')
-    error('Field ''sTrajType'' cannot be ommitted from ''problem'''); end
+    error('Field ''sTrajType'' cannot be ommitted from ''input'''); end
 validTrajTypes = {'trap','poly5','poly','cheb','cheb2','spline','custom'};
 validatestring(input.sTrajType,validTrajTypes)
 % assign to property
 inputC.sTrajType = input.sTrajType; 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% check optional fields (and assign default values if empty)
+% check optional fields (and assign default values if empty
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% timeA

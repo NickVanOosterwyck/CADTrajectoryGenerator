@@ -3,39 +3,39 @@ clear; clc; close all;
 addpath(genpath([fileparts(matlab.desktop.editor.getActiveFilename),'\..']))
 
 % example poly5
-problem.sTrajType = 'poly5';
-problem.timeA = 0;
-problem.timeB = 2;
-problem.posA = 0;
-problem.posB = 3;
+input.sTrajType = 'poly5';
+input.timeA = 0;
+input.timeB = 2;
+input.posA = 0;
+input.posB = 3;
 
-poly5 = CADTraj(problem);
+poly5 = CADTraj(input);
 poly5.createTrajectory();
 
 % example cheb7
-clear problem
-problem.sTrajType = 'cheb';
-problem.DOF = 2;
+clear input
+input.sTrajType = 'cheb';
+input.DOF = 2;
 
-poly7 = CADTraj(problem);
+poly7 = CADTraj(input);
 poly7.createTrajectory();
 
 % example spline2
-clear problem
-problem.sTrajType = 'spline';
-problem.DOF = 2;
+clear input
+input.sTrajType = 'spline';
+input.DOF = 2;
 
-spline2 = CADTraj(problem);
+spline2 = CADTraj(input);
 spline2.createTrajectory();
 
 % example spline2
-clear problem
-problem.sTrajType = 'custom';
+clear input
+input.sTrajType = 'custom';
 syms a b t
-problem.trajFun = [a*t^2 + b*t; t];
-problem.trajFunBreaks = [0 1 2];
+input.trajFun = [a*t^2 + b*t; t];
+input.trajFunBreaks = [0 1 2];
 
-custom = CADTraj(problem);
+custom = CADTraj(input);
 custom.createTrajectory();
 disp(custom.traj.q)
 
