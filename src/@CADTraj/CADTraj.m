@@ -8,12 +8,8 @@ classdef CADTraj < handle
         print   % print struct
     end
     
-    
     methods
         function obj = CADTraj(input)
-            %CADTRAJECTORY Construct an instance of this class and checks
-            %the input struct.
-            %   Detailed explanation goes here
             obj.parseInput(input);
         end
     end
