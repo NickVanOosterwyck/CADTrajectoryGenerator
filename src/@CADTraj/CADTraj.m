@@ -2,15 +2,10 @@ classdef CADTraj < handle
     %CADTRAJECTORY Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties
-        
-        
-    end
-    
     properties (SetAccess = protected)
-        input
-        traj
-        print
+        input   % validated input struct
+        traj    % trajectory struct
+        print   % print struct
     end
     
     
@@ -23,11 +18,5 @@ classdef CADTraj < handle
         end
     end
     
-    methods (Access = private)
-        [inputC] = parseInput(obj, input);
-    end
-
-
-
 end
 
