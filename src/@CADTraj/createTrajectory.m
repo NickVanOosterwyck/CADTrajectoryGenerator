@@ -14,7 +14,6 @@ nPieces = obj.input.nPieces; % #intervals
 trapRatio = obj.input.trapRatio; % ratio t_acc/t_tot (trap)
 trajFun = obj.input.trajFun; % custom symbolic trajectory function
 trajFunBreaks = obj.input.trajFunBreaks;
-designVars = obj.input.designVars;
 
 %% define position function
 syms t % time variable
@@ -108,9 +107,6 @@ switch sTrajType
         constrVar=symVar(1:end).';
         designVar=sym('q', [1 nPieces]);
         designVar=designVar(2:nPieces-2).';
-    case 'custom'
-        constrVar = [];
-        designVar = designVars;
     otherwise
         constrVar =[];
         designVar =[];
