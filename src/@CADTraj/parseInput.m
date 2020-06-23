@@ -43,63 +43,65 @@ function [inputC] = parseInput(obj, input)
 % check and validate required fields
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% sTrajType
-% check input
+%%% sTrajType
+% validate field
 if ~isfield(input, 'sTrajType')
-    error('Field ''sTrajType'' cannot be ommitted from ''input'''); end
-validTrajTypes = {'trap','poly5','poly','cheb','cheb2','spline','custom'};
-validatestring(input.sTrajType,validTrajTypes)
-inputC.sTrajType = input.sTrajType; 
+    error('Field ''sTrajType'' cannot be ommitted from ''input''');
+else
+    validTrajTypes = {'trap','poly5','poly','cheb','cheb2','spline','custom'};
+    validatestring(input.sTrajType,validTrajTypes)
+end
+inputC.sTrajType = input.sTrajType;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % check optional fields (and assign default values if empty)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% timeA
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'timeA')
     input.timeA = sym('tA');
 elseif ~isa(input.timeA,'sym') && ~isnumeric(input.timeA)
-    error('Field ''timeA'' must be numeric or symbolic')
+    error('Field ''timeA'' must be numeric or symbolic.')
 end
 inputC.timeA = input.timeA; 
 
 %%% timeB
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'timeB')
     input.timeB = sym('tB');
 elseif ~isa(input.timeB,'sym') && ~isnumeric(input.timeB)
-    error('Field ''timeB'' must be numeric or symbolic')
+    error('Field ''timeB'' must be numeric or symbolic.')
 end
 % extra checks
 if isnumeric(input.timeA) && isnumeric(input.timeB)
     if input.timeB < input.timeA
         error(['The value of field ''timeB'' must be greater than',...
-            'the value of field ''timeB'''])
+            'the value of field ''timeB''.'])
     end
 end
 inputC.timeB = input.timeB;
 
 %%% posA
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'posA')
     input.posA = sym('pA');
 elseif ~isa(input.posA,'sym') && ~isnumeric(input.posA)
-    error('Field ''posA'' must be numeric or symbolic')
+    error('Field ''posA'' must be numeric or symbolic.')
 end
 inputC.posA = input.posA; 
 
 %%% posB
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'posB')
     input.posB = sym('pB');
 elseif ~isa(input.posB,'sym') && ~isnumeric(input.posB)
-    error('Field ''posB'' must be numeric or symbolic')
+    error('Field ''posB'' must be numeric or symbolic.')
 end
 inputC.posB = input.posB;
 
 %%% DOF
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'DOF')
     input.DOF = 0;
 else
@@ -113,7 +115,7 @@ switch inputC.sTrajType
             error(['The selected trajectory',...
                 'type does not allow any DOF.'])
         end
-    case {'poly','cheb','cheb2','spline','custom'}
+    case {'poly','cheb','cheb2','spline'}
         if input.DOF == 0
             warning('The selected trajectory is not optimisable.')
         end
@@ -121,30 +123,30 @@ end
 inputC.DOF = input.DOF; 
 
 %%% trapRatio
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'trapRatio')
     input.trapRatio = [];
 else
     mustBeNonnegative(input.trapRatio);
     mustBeLessThanOrEqual(input.trapRatio,0.5)
-    % extra checks
-    switch inputC.sTrajType
-        case {'poly5','poly','cheb','cheb2','spline','custom'}
-            if ~isempty(input.trapRatio)
-                error(['The selected trajectory type ''%s'' does not allow a',...
-                    'field ''trapRatio.'''],input.sTrajType)
-            end
-    end
+end
+% extra checks
+switch inputC.sTrajType
+    case {'poly5','poly','cheb','cheb2','spline','custom'}
+        if ~isempty(input.trapRatio)
+            error(['The selected trajectory type ''%s'' does not allow a',...
+                'field ''trapRatio.'''],input.sTrajType)
+        end
 end
 inputC.trapRatio = input.trapRatio;
 
 %%% trajFun
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'trajFun')
     input.trajFun = [];
 else
     if ~isempty(input.trajFun) && ~isa(input.trajFun,'sym')
-        error('Value must be symbolic')
+        error('Value must be symbolic.')
     end
 end
 % extra checks
@@ -158,10 +160,13 @@ end
 inputC.trajFun = input.trajFun;
 
 %%% trajFunBreaks
-% check input and assign default if empty
-if ~isfield(input,'trajFunBreaks'), input.trajFunBreaks = []; end
-if ~isa(input.trajFunBreaks,'sym') && ~isnumeric(input.trajFunBreaks)
-    error('Field ''trajFunBreaks'' must be numeric or symbolic')
+% validate field and assign default value if empty
+if ~isfield(input,'trajFunBreaks')
+    input.trajFunBreaks = [];
+else
+    if ~isa(input.trajFunBreaks,'sym') && ~isnumeric(input.trajFunBreaks)
+        error('Field ''trajFunBreaks'' must be numeric or symbolic.')
+    end
 end
 % extra checks
 switch inputC.sTrajType
@@ -174,7 +179,7 @@ end
 inputC.trajFunBreaks = input.trajFunBreaks;
 
 %%% digits
-% check input and assign default if empty
+% validate field and assign default value if empty
 if ~isfield(input,'digits')
     input.digits = [];
 else
