@@ -42,7 +42,7 @@ switch sTrajType
         if isa(posB,'sym'), fprintf(fileID,'end position \t= %s\n',posB); end
         for i=1:DOF
             fprintf(fileID,'variable %d\t= %s\n',i,char(designVar(i)));
-        end        
+        end
 end
 fprintf(fileID,'%s\r\n','');
 
@@ -55,7 +55,11 @@ end
 sBreaks = string.empty(0,nPieces+1);
 for i=1:nPieces+1
     if isa(breaks(i),'sym')
-        sBreaks(i) = char(vpa(breaks(i),digits));
+        if ~isempty(digits)
+            sBreaks(i) = char(vpa(breaks(i),digits));
+        else
+            sBreaks(i) = char(breaks(i));
+        end
     else
         sBreaks(i) = num2str(breaks(i));
     end
@@ -64,9 +68,22 @@ end
 if nPieces == 1
     fprintf(fileID,'%s\n',q);
 else
-    fprintf(fileID,'(STEP(time,%s,1,%s,0)*(%s))+',sBreaks(2),sBreaks(2),char(vpa(q(1),digits)));
+    if ~isempty(digits)
+        fprintf(fileID,'(STEP(time,%s,1,%s,0)*(%s))+',...
+            sBreaks(2),sBreaks(2),char(vpa(q(1),digits)));
+    else
+        fprintf(fileID,'(STEP(time,%s,1,%s,0)*(%s))+',...
+            sBreaks(2),sBreaks(2),char(q(1)));
+    end
     for i=2:nPieces
-        fprintf(fileID,'((STEP(time,%s,0,%s,1)-STEP(time,%s,0,%s,1))*(%s))+',sBreaks(i),sBreaks(i),sBreaks(i+1),sBreaks(i+1),char(vpa(q(i),digits)));
+        if ~isempty(digits)
+            fprintf(fileID,'((STEP(time,%s,0,%s,1)-STEP(time,%s,0,%s,1))*(%s))+',...
+                sBreaks(i),sBreaks(i),sBreaks(i+1),sBreaks(i+1),char(vpa(q(i),digits)));
+        else
+            fprintf(fileID,'((STEP(time,%s,0,%s,1)-STEP(time,%s,0,%s,1))*(%s))+',...
+                sBreaks(i),sBreaks(i),sBreaks(i+1),sBreaks(i+1),char(q(i)));
+        end
+        
     end
     fprintf(fileID,'%s\r\n','0'); % add zero to last summation
 end
