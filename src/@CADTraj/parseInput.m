@@ -7,13 +7,15 @@ function [inputC] = parseInput(obj, input)
 %   input = an input struct, with required field
 %       .sTrajType % trajectory type
 %   and optional fields:
-%       .timeA % start time
-%       .timeB % end time
-%       .posA % start position
-%       .posB % end position 
-%       .DOF % degrees of freedom
-%       .trapRatio % ratio t_acc/t_tot
-%       .trajFun % custom trajectory function
+%       .timeA = start time
+%       .timeB = end time
+%       .posA = start position
+%       .posB = end position 
+%       .DOF = degrees of freedom
+%       .trapRatio = ratio t_acc/t_tot
+%       .trajFun = custom trajectory function
+%       .trajFunBreaks = custom breakspoints
+%       .digits % # significant digits
 %
 % OUTPUTS:
 %   inputC = a complete input struct, with validated fields:
@@ -25,6 +27,8 @@ function [inputC] = parseInput(obj, input)
 %       .DOF % degrees of freedom
 %       .trapRatio % ratio t_acc/t_tot
 %       .trajFun % custom trajectory function
+%       .trajFunBreaks = custom breakspoints
+%       .digits % # significant digits
 %   and derived fields:
 %       .nPieces % number of time intervals
 %   
