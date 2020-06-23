@@ -49,11 +49,10 @@ if ~isfield(input, 'sTrajType')
     error('Field ''sTrajType'' cannot be ommitted from ''input'''); end
 validTrajTypes = {'trap','poly5','poly','cheb','cheb2','spline','custom'};
 validatestring(input.sTrajType,validTrajTypes)
-% assign to property
 inputC.sTrajType = input.sTrajType; 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% check optional fields (and assign default values if empty
+% check optional fields (and assign default values if empty)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% timeA
@@ -63,7 +62,6 @@ if ~isfield(input,'timeA')
 elseif ~isa(input.timeA,'sym') && ~isnumeric(input.timeA)
     error('Field ''timeA'' must be numeric or symbolic')
 end
-% assign to property
 inputC.timeA = input.timeA; 
 
 %%% timeB
@@ -80,7 +78,6 @@ if isnumeric(input.timeA) && isnumeric(input.timeB)
             'the value of field ''timeB'''])
     end
 end
-% assign to property
 inputC.timeB = input.timeB;
 
 %%% posA
@@ -90,7 +87,6 @@ if ~isfield(input,'posA')
 elseif ~isa(input.posA,'sym') && ~isnumeric(input.posA)
     error('Field ''posA'' must be numeric or symbolic')
 end
-% assign to property
 inputC.posA = input.posA; 
 
 %%% posB
@@ -100,7 +96,6 @@ if ~isfield(input,'posB')
 elseif ~isa(input.posB,'sym') && ~isnumeric(input.posB)
     error('Field ''posB'' must be numeric or symbolic')
 end
-% assign to property
 inputC.posB = input.posB;
 
 %%% DOF
@@ -123,7 +118,6 @@ switch inputC.sTrajType
             warning('The selected trajectory is not optimisable.')
         end
 end
-% assign to property
 inputC.DOF = input.DOF; 
 
 %%% trapRatio
@@ -142,7 +136,6 @@ else
             end
     end
 end
-% assign to property
 inputC.trapRatio = input.trapRatio;
 
 %%% trajFun
@@ -162,7 +155,6 @@ switch inputC.sTrajType
             'field ''trajFun.'''],input.sTrajType)
         end
 end
-% assign to property
 inputC.trajFun = input.trajFun;
 
 %%% trajFunBreaks
@@ -179,7 +171,6 @@ switch inputC.sTrajType
             'field ''trajFunBreaks'''],input.sTrajType)
         end
 end
-% assign to property
 inputC.trajFunBreaks = input.trajFunBreaks;
 
 %%% digits
@@ -190,7 +181,6 @@ else
     mustBeInteger(input.digits);
     mustBeGreaterThanOrEqual(input.digits,2);
 end
-% assign to property
 inputC.digits = input.digits; 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
