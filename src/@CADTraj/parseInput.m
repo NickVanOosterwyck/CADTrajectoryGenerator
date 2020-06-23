@@ -178,26 +178,6 @@ end
 % assign to property
 inputC.trajFunBreaks = input.trajFunBreaks;
 
-%%% designVars
-% check input and assign default if empty
-if ~isfield(input,'designVars')
-    input.designVars = [];
-else
-    if ~isa(input.designVars,'sym')
-        error('Field ''designVars'' must be symbolic')
-    end
-end
-% extra checks
-switch inputC.sTrajType
-    case {'poly5','trap','poly','cheb','cheb2','spline'}
-        if ~isempty(input.designVars)
-        error(['The selected trajectory type ''%s'' does not allow a',...
-            'field ''designVars'''],input.sTrajType)
-        end
-end
-% assign to property
-inputC.designVars = input.designVars;
-
 %%% digits
 % check input and assign default if empty
 if ~isfield(input,'digits')

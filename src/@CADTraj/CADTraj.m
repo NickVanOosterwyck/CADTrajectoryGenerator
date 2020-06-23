@@ -19,10 +19,8 @@ classdef CADTraj < handle
             %CADTRAJECTORY Construct an instance of this class and checks
             %the input struct.
             %   Detailed explanation goes here
-            
             obj.parseInput(input);
         end
-        [print] = printTrajectory(obj);
     end
     
     methods (Access = private)

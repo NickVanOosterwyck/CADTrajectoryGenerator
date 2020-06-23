@@ -11,7 +11,6 @@ problem.posB = 3;
 
 poly5 = CADTraj(problem);
 poly5.createTrajectory();
-disp(poly5.traj.q)
 
 % example cheb7
 clear problem
@@ -20,7 +19,6 @@ problem.DOF = 2;
 
 poly7 = CADTraj(problem);
 poly7.createTrajectory();
-disp(poly7.traj.q)
 
 % example spline2
 clear problem
@@ -29,7 +27,6 @@ problem.DOF = 2;
 
 spline2 = CADTraj(problem);
 spline2.createTrajectory();
-disp(spline2.traj.q)
 
 % example spline2
 clear problem
