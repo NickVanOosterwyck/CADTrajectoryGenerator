@@ -10,7 +10,7 @@ classdef CADTraj < handle
     
     methods
         function obj = CADTraj(input)
-            obj.parseInput(input);
+            obj.input = obj.parseInput(input);
         end
     end
     

@@ -13,7 +13,7 @@ DOF = obj.input.DOF; % degree of freedom
 nPieces = obj.input.nPieces; % #intervals
 trapRatio = obj.input.trapRatio; % ratio t_acc/t_tot (trap)
 trajFun = obj.input.trajFun; % custom symbolic trajectory function
-trajFunBreaks = obj.input.trajFunBreaks;
+trajFunBreaks = obj.input.trajFunBreaks; % breakpoints
 
 %% define position function
 syms t % time variable

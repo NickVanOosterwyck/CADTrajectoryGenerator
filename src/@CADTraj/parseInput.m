@@ -49,7 +49,7 @@ if ~isfield(input, 'sTrajType')
     error('Field ''sTrajType'' cannot be ommitted from ''input''');
 else
     validTrajTypes = {'trap','poly5','poly','cheb','cheb2','spline','custom'};
-    validatestring(input.sTrajType,validTrajTypes)
+    validatestring(input.sTrajType,validTrajTypes);
 end
 inputC.sTrajType = input.sTrajType;
 
