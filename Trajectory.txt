@@ -1,0 +1,9 @@
+Date and Time: 30-Jun-2020 13:57:22
+
+Variables: 
+a
+b
+time
+
+Trajectory function: 
+(STEP(time,1,1,1,0)*(b*time + a*time^2))+((STEP(time,1,0,1,1)-STEP(time,2,0,2,1))*(time))+0

@@ -59,9 +59,9 @@ switch sTrajType
         dt = timeB-timeA;
         qd1_max = (posB-posA)/((trapRatio*dt)+(dt-2*trapRatio*dt));
         qd1 = sym.empty(3,0);
-        qd1(1,:) = qd1_max/(trapRatio*dt)*(t-timeA);
-        qd1(2,:) = qd1_max;
-        qd1(3,:) = -qd1_max/(trapRatio*dt)*(t-timeB);
+        qd1(1) = qd1_max/(trapRatio*dt)*(t-timeA);
+        qd1(2) = qd1_max;
+        qd1(3) = -qd1_max/(trapRatio*dt)*(t-timeB);
         % calculate derivative
         qd2 = diff(qd1,t);
         % solve system
@@ -70,13 +70,12 @@ switch sTrajType
         eq = sym.empty(3,0);
         eq(1) = subs(q(1),t,timeA)+C1 == posA;
         eq(2) = subs(q(2),t,dt/2+timeA)+C2 == ...
-            abs(posB-posA)/2+min(posB,posA);
+            (posB-posA)/2+posA;
         eq(3) = subs(q(3),t,timeB)+C3 == posB;
         sol = solve(eq,[C1 C2 C3]);
-        q = sym.empty(3,0);
-        q(1,:) = q(1)+sol.C1;
-        q(2,:) = q(2)+sol.C2;
-        q(3,:) = q(3)+sol.C3;
+        q(1) = q(1)+sol.C1;
+        q(2) = q(2)+sol.C2;
+        q(3) = q(3)+sol.C3;
         
     case 'custom'
         q=trajFun;

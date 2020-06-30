@@ -28,7 +28,14 @@ input.DOF = 2;
 spline2 = CADTraj(input);
 spline2.createTrajectory();
 
-% example spline2
+% example trap
+clear input
+input.sTrajType = 'trap';
+
+trap = CADTraj(input);
+trap.createTrajectory();
+
+% example custom
 clear input
 input.sTrajType = 'custom';
 syms a b t
@@ -37,6 +44,5 @@ input.trajFunBreaks = [0 1 2];
 
 custom = CADTraj(input);
 custom.createTrajectory();
-disp(custom.traj.q)
 
 custom.printTrajectory();

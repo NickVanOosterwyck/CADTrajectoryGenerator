@@ -125,7 +125,12 @@ inputC.DOF = input.DOF;
 %%% trapRatio
 % validate field and assign default value if empty
 if ~isfield(input,'trapRatio')
-    input.trapRatio = [];
+    switch inputC.sTrajType
+        case 'trap'
+            input.trapRatio = 1/3;
+        otherwise
+            input.trapRatio = [];
+    end
 else
     mustBeNonnegative(input.trapRatio);
     mustBeLessThanOrEqual(input.trapRatio,0.5)
