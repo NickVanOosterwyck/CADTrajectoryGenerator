@@ -70,7 +70,7 @@ switch sTrajType
         eq = sym.empty(3,0);
         eq(1) = subs(q(1),t,timeA)+C1 == posA;
         eq(2) = subs(q(2),t,dt/2+timeA)+C2 == ...
-            (posB-posA)/2+posA;
+            sqrt((posB-posA)^2)/2+posA; % only for increasing positions!!!
         eq(3) = subs(q(3),t,timeB)+C3 == posB;
         sol = solve(eq,[C1 C2 C3]);
         q(1) = q(1)+sol.C1;
