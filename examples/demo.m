@@ -46,3 +46,5 @@ custom = CADTraj(input);
 custom.createTrajectory();
 
 custom.printTrajectory();
+
+
