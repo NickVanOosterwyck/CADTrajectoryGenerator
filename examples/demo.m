@@ -1,3 +1,4 @@
+clc
 %% init
 clear; clc; close all;
 addpath(genpath([fileparts(matlab.desktop.editor.getActiveFilename),'\..']))
@@ -5,9 +6,9 @@ addpath(genpath([fileparts(matlab.desktop.editor.getActiveFilename),'\..']))
 % example poly5
 input.sTrajType = 'poly5';
 input.timeA = 0;
-input.timeB = 2;
+input.timeB = 0.5;
 input.posA = 0;
-input.posB = 3;
+input.posB = 1.5708;
 
 poly5 = CADTraj(input);
 poly5.createTrajectory();

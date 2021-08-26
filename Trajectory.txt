@@ -1,0 +1,13 @@
+Date and Time: 26-Feb-2021 18:16:30
+
+Variables: 
+posB
+posD
+speedB
+timeB
+timeC
+timeD
+time
+
+Trajectory function: 
+(STEP(time,timeB,1,timeB,0)*((2*time^3*(5*posB - 2*speedB*timeB))/timeB^3 + (3*time^5*(2*posB - speedB*timeB))/timeB^5 - (time^4*(15*posB - 7*speedB*timeB))/timeB^4))+((STEP(time,timeB,0,timeB,1)-STEP(time,timeC,0,timeC,1))*(posB))+((STEP(time,timeC,0,timeC,1)-STEP(time,timeD,0,timeD,1))*(-(posB*timeD^5 - posD*timeC^5 - 6*posB*time^5 + 6*posD*time^5 - 5*posB*timeC*timeD^4 + 5*posD*timeC^4*timeD + 15*posB*timeC*time^4 + 15*posB*timeD*time^4 - 15*posD*timeC*time^4 - 15*posD*timeD*time^4 + 10*posB*timeC^2*timeD^3 - 10*posD*timeC^3*timeD^2 - 10*posB*timeC^2*time^3 - 10*posB*timeD^2*time^3 + 10*posD*timeC^2*time^3 + 10*posD*timeD^2*time^3 - 40*posB*timeC*timeD*time^3 + 40*posD*timeC*timeD*time^3 + 30*posB*timeC*timeD^2*time^2 + 30*posB*timeC^2*timeD*time^2 - 30*posB*timeC^2*timeD^2*time - 30*posD*timeC*timeD^2*time^2 - 30*posD*timeC^2*timeD*time^2 + 30*posD*timeC^2*timeD^2*time)/(timeC - timeD)^5))+((STEP(time,timeD,0,timeD,1)-STEP(time,simTime,0,simTime,1))*(posD))+0

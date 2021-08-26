@@ -5,7 +5,7 @@ function [print] = printTrajectory(obj)
 
 %% read required properties
 q = obj.traj.q; % symbolic trajectory function
-designVar = obj.traj.designVar; % design variables
+designVar = obj.traj.var.designVar; % design variables
 breaks = obj.traj.breaks; % breakpoints
 
 sTrajType = obj.input.sTrajType; % trajectory type
@@ -18,8 +18,9 @@ nPieces = obj.input.nPieces; % #intervals
 digits = obj.input.digits; % #significant digits
 
 %% replace time variable to NX format
-syms t time
+syms x t time
 q = subs(q,t,time);
+q = subs(q,x,time);
 
 %% create text file
 fileID = fopen('Trajectory.txt','w','native','UTF-8');

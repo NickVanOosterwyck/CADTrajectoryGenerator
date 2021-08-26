@@ -48,10 +48,12 @@ function [inputC] = parseInput(obj, input)
 if ~isfield(input, 'sTrajType')
     error('Field ''sTrajType'' cannot be ommitted from ''input''');
 else
-    validTrajTypes = {'trap','poly5','poly','cheb','cheb2','spline','custom'};
+    validTrajTypes = {'trap','cvel','pause','poly','cheb','chebU',...
+        'spline','custom'};
     validatestring(input.sTrajType,validTrajTypes);
 end
 inputC.sTrajType = input.sTrajType;
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % check optional fields (and assign default values if empty)
@@ -99,6 +101,35 @@ elseif ~isa(input.posB,'sym') && ~isnumeric(input.posB)
     error('Field ''posB'' must be numeric or symbolic.')
 end
 inputC.posB = input.posB;
+
+%%% speedA
+% validate field and assign default value if empty
+if ~isfield(input,'speedA')
+    input.speedA = sym('0');
+elseif ~isa(input.speedA,'sym') && ~isnumeric(input.speedA)
+    error('Field ''speedA'' must be numeric or symbolic.')
+end
+inputC.speedA = input.speedA;
+
+%%% speedB
+% validate field and assign default value if empty
+if ~isfield(input,'speedB')
+    input.speedB = sym('0');
+elseif ~isa(input.speedB,'sym') && ~isnumeric(input.speedB)
+    error('Field ''speedB'' must be numeric or symbolic.')
+end
+inputC.speedB = input.speedB;
+
+%%% isJerk0
+% validate field
+if ~isfield(input,'isJerk0')
+    input.isJerk0 = false;
+else
+    if ~islogical(input.isJerk0)
+        error('Field ''isJerk0'' must be logical.')
+    end
+end
+inputC.isJerk0 = input.isJerk0;
 
 %%% DOF
 % validate field and assign default value if empty
@@ -199,8 +230,10 @@ inputC.digits = input.digits;
 
 %%% nPieces
 switch inputC.sTrajType
-    case {'poly5','poly','cheb','cheb2'}
+    case {'pause','poly','cheb','chebU','dis'}
         inputC.nPieces = 1;
+    case {'cvel'}
+        inputC.nPieces = 2;
     case {'trap'}
         inputC.nPieces = 3;
     case {'spline'}
